@@ -143,10 +143,12 @@ outputs так же корректен, вино на первом скрине 
 
 создала файл console.tf
 затем в  terraform console выполнила команды
+```dockerfile
 var.test_list[1]
 length(var.test_list)
 var.test_map["admin"]
 "${var.test_list[0]} is ${var.test_list[1]} for ${var.test_list[2]} server based on OS ${var.servers.os} with ${var.servers.vcpu} vcpu, ${var.servers.ram} ram and ${length(var.servers.disks)} virtual disks"
+```
 
 ![1](7.1.png)
 
