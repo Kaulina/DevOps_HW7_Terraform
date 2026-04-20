@@ -1,34 +1,21 @@
-variable "token" {
-  type        = string
-  description = "Yandex Cloud OAuth token"
-}
-
-variable "cloud_id" {
-  type        = string
-  description = "Yandex Cloud ID"
-}
-
+# Общие переменные
 variable "folder_id" {
-  type        = string
-  description = "Yandex Cloud Folder ID"
-}
-
-variable "vpc_name" {
-  type        = string
-  description = "Existing VPC name"
-}
-
-variable "subnet_name" {
-  type        = string
-  description = "Existing subnet name"
+  type = string
 }
 
 variable "vms_ssh_root_key" {
-  type        = string
-  description = "SSH public key for VM access"
+  type = string
 }
 
-# WEB VM variables
+variable "image_id" {
+  type = string
+}
+
+variable "subnet_id" {
+  type = string
+}
+
+# Переменные для WEB ВМ
 variable "vm_web_name" {
   type = string
 }
@@ -57,7 +44,11 @@ variable "vm_web_nat" {
   type = bool
 }
 
-# DB VM variables
+variable "vm_web_zone" {
+  type = string
+}
+
+# Переменные для DB ВМ
 variable "vm_db_name" {
   type = string
 }
@@ -84,4 +75,8 @@ variable "vm_db_preemptible" {
 
 variable "vm_db_nat" {
   type = bool
+}
+
+variable "vm_db_zone" {
+  type = string
 }

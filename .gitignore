@@ -1,13 +1,45 @@
-# Local .terraform directories and files
+# Terraform directories
 **/.terraform/*
-.terraform*
+.terraform/
 
-!.terraformrc
-
-# .tfstate files
+# Terraform state files
 *.tfstate
 *.tfstate.*
+terraform.tfstate
+terraform.tfstate.backup
 
-# own secret vars store.
-personal.auto.tfvars
-key.json
+# Terraform lock file
+.terraform.lock.hcl
+
+# Sensitive variable files
+*.tfvars
+*.auto.tfvars
+*.tfvars.json
+
+# But allow example tfvars
+!terraform.tfvars.example
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Service account keys
+*.json
+*.key
+*.pem
+
+# Local override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Editor/OS junk
+.DS_Store
+Thumbs.db

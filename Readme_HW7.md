@@ -33,3 +33,138 @@ core_fraction (например, 5 или 20)
 Во время учёбы это даёт возможность:
 -запускать больше ВМ, оставаясь в рамках тех же квот и бюджета;
 -тренироваться с инфраструктурой, не переплачивая за лишние ресурсы.
+
+
+## Задание 2
+
+все хардкод‑значения из ресурсов yandex_compute_image и yandex_compute_instance вынесла в отдельные переменные.
+Все переменные первой ВМ получили префикс vm_web_
+переменные в variables.tf с типами и значениями по умолчанию
+
+![1](2.1.variables.png)
+
+В main.tf заменены все хардкод‑значения на обращения к переменным (var.vm_web_*).
+
+![2](2.2.main.png)
+
+Переменные cloud_id, folder_id и vms_ssh_root_key объявила отдельно и заполняются теперь через terraform.tfvars.
+
+После внесения изменений выполнена команда terraform plan.
+
+![3](2.3.plan.png)
+
+## Задание 3
+
+Для задания создала файл vms_platform.tf, в который перенесла все переменные первой ВМ (vm_web_).
+
+![1](3.1.vms_platform.png)
+
+Также объявила переменные для второй ВМ (vm_db_).
+В файле main.tf скопировала ресурс первой ВМ и создала новый:
+
+![2](3.2.main.png)
+
+имя: netology-develop-platform-db
+зона: ru-central1-a
+параметры: cores=2, memory=2, core_fraction=20
+После внесения изменений выполнена команда:
+
+```dockerfile
+terraform plan
+```
+Terraform показал:
+
+```dockerfile
+Plan: 1 to add, 0 to change, 0 to destroy.
+```
+![2](3.3.plan2.png)
+
+После выполнения:
+```dockerfile
+terraform apply
+```
+Вторая ВМ успешно создана.
+
+![3](3.4.apply3.png)
+
+
+## Задание 4
+
+Cоздаkf единый output, содержащий имя, внешний IP и FQDN обеих VM.
+Все значения получены динамически из ресурсов Terraform, без использования хардкода.
+
+![4](4.1.png)
+
+## Задание 5
+
+был создан файл locals.tf, который содержит локальные переменные для формирования имён виртуальных машин
+
+![1](5.1.png)
+
+внесла изменения в yandex_compute_instance.platform и yandex_compute_instance.platform_dbизначение name
+
+![2](5.2.name.png)
+
+в итоге обновилось только поле name у обеих ВМ
+
+![3](5.2.plan.png)
+
+![4](5.2.png)
+
+## Задание 6
+
+по заданию нужно было изменить структуру проекта, я добавила папки modules/vms
+внутри положила:
+modules/vms/main.tf
+modules/vms/variables.tf
+modules/vms/outputs.tf
+modules/vms/locals.tf
+
+все переменные прописала в terraform.tfvars
+
+![1](6.1.png)
+
+модуль vms отвечает за создание двух виртуальных машин: web и db.
+
+создала 2 ВМ
+
+![2](6.2.plan.png)
+
+terraform apply показал что создание прошло успешно
+
+![3](6.3.apply.png)
+
+outputs так же корректен, вино на первом скрине структуры.
+и в завершении в YC видно, что работают 2 ВМ web и db.
+
+![4](6.4.YC.png)
+
+## Задание 7
+
+создала файл console.tf
+затем в  terraform console выполнила команды
+var.test_list[1]
+length(var.test_list)
+var.test_map["admin"]
+"${var.test_list[0]} is ${var.test_list[1]} for ${var.test_list[2]} server based on OS ${var.servers.os} with ${var.servers.vcpu} vcpu, ${var.servers.ram} ram and ${length(var.servers.disks)} virtual disks"
+
+![1](7.1.png)
+
+## Задание 8
+
+описание type переменной test:
+```dockerfile
+variable "test" {
+  type = list(map(list(string)))
+}
+```
+
+Команда для получения строки SSH‑подключения в terraform console:
+
+```dockerfile
+var.test[0]["dev1"][0]
+
+результат:
+"ssh -o 'StrictHostKeyChecking=no' ubuntu@62.84.124.117"
+```
+

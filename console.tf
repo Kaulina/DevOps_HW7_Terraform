@@ -1,32 +1,19 @@
-##Этот файл для 7 задания!!
-locals {
+variable "test_list" {
+  default = ["John", "admin", "prod"]
+}
 
-  test_list = ["develop", "staging", "production"]
-
-  test_map = {
+variable "test_map" {
+  default = {
     admin = "John"
-    user  = "Alex"
-  }
-
-  servers = {
-    develop = {
-      cpu   = 2
-      ram   = 4
-      image = "ubuntu-21-10"
-      disks = ["vda", "vdb"]
-    },
-    stage = {
-      cpu   = 4
-      ram   = 8
-      image = "ubuntu-20-04"
-      disks = ["vda", "vdb"]
-    },
-    production = {
-      cpu   = 10
-      ram   = 40
-      image = "ubuntu-20-04"
-      disks = ["vda", "vdb", "vdc", "vdd"]
-    }
+    role  = "admin"
   }
 }
 
+variable "servers" {
+  default = {
+    os    = "ubuntu-20-04"
+    vcpu  = 4
+    ram   = 8
+    disks = ["disk1", "disk2", "disk3"]
+  }
+}
